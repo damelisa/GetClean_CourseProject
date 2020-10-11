@@ -51,3 +51,4 @@ colnames(data) <- gsub("std\\(\\)", "Std-Deviation", colnames(data))
 # make new dataset with averaged data grouped by subject & activity
 tidydata <- arrange(data, subject, Training_labels) %>% group_by(subject, activity) %>% summarise_all(funs(mean))
 
+write.table(tidydata, "./tidydata.txt", row.name=FALSE)
