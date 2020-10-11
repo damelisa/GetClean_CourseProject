@@ -1,3 +1,4 @@
+# read in libraries
 library(dplyr)
 
 # read test & train data
@@ -49,6 +50,10 @@ colnames(data) <- gsub("mean\\(\\)", "Mean", colnames(data))
 colnames(data) <- gsub("std\\(\\)", "Std-Deviation", colnames(data))
 
 # make new dataset with averaged data grouped by subject & activity
-tidydata <- arrange(data, subject, Training_labels) %>% group_by(subject, activity) %>% summarise_all(funs(mean))
+tidydata <- arrange(data, subject, Training_labels) %>%
+  group_by(subject, activity, Training_labels) %>%
+  summarise_all(funs(mean))%>%
+  arrange(subject, Training_labels, activity)
 
+# generate the final tidy_data.txt file
 write.table(tidydata, "./tidydata.txt", row.name=FALSE)
